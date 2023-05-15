@@ -46,10 +46,12 @@ const commitPlacement = (finishedWork: FiberNode) => {
 	// 找到parent，再插入
 	console.log('执行Placement操作', finishedWork);
 	const hostParent = getHostParent(finishedWork);
-	appendPlacementNodeIntoContainer(finishedWork, hostParent);
+	if (hostParent !== null) {
+		appendPlacementNodeIntoContainer(finishedWork, hostParent);
+	}
 };
 
-function getHostParent(fiber: FiberNode) {
+function getHostParent(fiber: FiberNode): Container | null {
 	let parent = fiber.return;
 
 	while (parent) {
@@ -64,6 +66,7 @@ function getHostParent(fiber: FiberNode) {
 	}
 
 	console.log('未找到 host parent');
+	return null;
 }
 
 function appendPlacementNodeIntoContainer(
@@ -71,7 +74,7 @@ function appendPlacementNodeIntoContainer(
 	hostParent: Container
 ) {
 	if (finishedWork.tag === HostComponent || finishedWork.tag === HostText) {
-		appendChildToContainer(finishedWork.stateNode, hostParent);
+		appendChildToContainer(hostParent, finishedWork.stateNode);
 		return;
 	}
 	const child = finishedWork.child;
