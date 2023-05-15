@@ -11,3 +11,5 @@ export interface ReactElement {
 	ref: Ref;
 	__flag: string;
 }
+
+export type Action<State> = State | ((prevState: State) => State);
