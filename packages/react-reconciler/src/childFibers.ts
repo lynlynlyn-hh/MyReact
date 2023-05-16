@@ -43,7 +43,9 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 		if (typeof newChild === 'object' && newChild !== null) {
 			switch (newChild.$$typeof) {
 				case REACT_ELEMENT_TYPE:
-					return reconcileSingleElement(returnFiber, currentFiber, newChild);
+					return placeSingleChild(
+						reconcileSingleElement(returnFiber, currentFiber, newChild)
+					);
 				default:
 					console.warn('未实现的reconcile类型', newChild);
 					break;

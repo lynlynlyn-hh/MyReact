@@ -65,7 +65,7 @@ function getHostParent(fiber: FiberNode): Container | null {
 		parent = parent.return;
 	}
 
-	console.log('未找到 host parent');
+	console.warn('未找到 host parent');
 	return null;
 }
 
@@ -74,6 +74,7 @@ function appendPlacementNodeIntoContainer(
 	hostParent: Container
 ) {
 	if (finishedWork.tag === HostComponent || finishedWork.tag === HostText) {
+		console.log('callappendChildToContainer');
 		appendChildToContainer(hostParent, finishedWork.stateNode);
 		return;
 	}

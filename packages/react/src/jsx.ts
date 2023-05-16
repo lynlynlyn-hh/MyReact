@@ -54,5 +54,26 @@ export const jsx = (
 	return ReactElement(type, key, ref, props);
 };
 
-// 实际React的生产环境 和 prod环境这两个方法是不一样的
-export const jsxDEV = jsx;
+export const jsxDEV = (type: ElementType, config: Props) => {
+	let key: Key = null;
+	const props: Props = {};
+	let ref: Ref = null;
+
+	for (const prop in config) {
+		const val = config[prop];
+		if (prop === 'key') {
+			key = val !== undefined ? '' + val : key;
+			continue;
+		}
+		if (prop === 'ref') {
+			ref = val !== undefined ? val : ref;
+			continue;
+		}
+		// 强制的校验
+		if ({}.hasOwnProperty.call(config, prop)) {
+			props[prop] = val;
+		}
+	}
+
+	return ReactElement(type, key, ref, props);
+};

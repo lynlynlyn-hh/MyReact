@@ -14,6 +14,8 @@ export const completeWork = (wip: FiberNode) => {
 	const newProps = wip.pendingProps;
 	const current = wip.alternate;
 
+	console.log('wip.tag', wip.tag);
+
 	switch (wip.tag) {
 		case HostComponent:
 			if (current !== null && wip.stateNode) {
@@ -24,6 +26,7 @@ export const completeWork = (wip: FiberNode) => {
 				//并插入到DOM树当中
 				appendAllChildren(instance, wip);
 				wip.stateNode = instance;
+				console.log('HostComponent', instance);
 			}
 			bubbleProperties(wip);
 			return null;
@@ -34,6 +37,7 @@ export const completeWork = (wip: FiberNode) => {
 				// 构建DOM
 				const instance = createTextInstance(newProps.content);
 				wip.stateNode = instance;
+				console.log('HostText', instance);
 			}
 			bubbleProperties(wip);
 			return null;

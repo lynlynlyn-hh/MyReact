@@ -55,7 +55,6 @@ function commitRoot(root: FiberRootNode) {
 	if (finishedWork === null) {
 		return;
 	}
-	console.log('commit阶段开始', finishedWork);
 
 	// 重置, why?
 	root.finishedWork = null;
@@ -95,8 +94,9 @@ function performUnitOfWork(fiber: FiberNode) {
 function completeUnitOfWork(fiber: FiberNode) {
 	let node: FiberNode | null = fiber;
 
+	console.log('completeUnitOfWorkcall');
 	do {
-		completeWork(fiber);
+		completeWork(node);
 		const sibling = node.sibling;
 		if (sibling !== null) {
 			workInProgress = sibling;
